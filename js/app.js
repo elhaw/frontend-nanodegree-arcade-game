@@ -42,7 +42,7 @@ var Player = function(x,y,speed) {
 };
 // This class requires an update(), render() and
 // a handleInput() method.
-Player.prototype.update = function() {
+Player.prototype.update = function(dt) {
 
 
 };
@@ -50,7 +50,20 @@ Player.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
 };
-Player.prototype.handleInput = function () {
+Player.prototype.handleInput = function (keypress) {
+
+  if(keypress === 'left'){
+ this.x -= 100;
+ }
+ if(keypress === 'up'){
+ this.y -= 82.5;
+ }
+ if(keypress === 'right'){
+ this.x += 100;
+ }
+ if(keypress === 'down'){
+ this.y += 82.5;
+ }
 
 };
 // Now instantiate your objects.
