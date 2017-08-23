@@ -21,9 +21,9 @@ Enemy.prototype.update = function(dt) {
     this.x = this.x + this.speed * dt;
     if (this.x > 500)
     {
-        this.x = Math.floor(Math.random() * (-1 + 4 + 1)) - 4;
+        this.x = Math.floor(Math.random() * (-1 + 7 + 1)) - 7;
     }
-
+    // console.log(this.x);
 };
 
 // Draw the enemy on the screen, required method for game
@@ -43,37 +43,56 @@ var Player = function(x,y,speed) {
 // This class requires an update(), render() and
 // a handleInput() method.
 Player.prototype.update = function(dt) {
-
-
+     if(this.y <= -15)
+     {
+        this.reset();
+     }
 };
 Player.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
 };
+
 Player.prototype.handleInput = function (keypress) {
 
-  if(keypress === 'left'){
- this.x -= 100;
+  if(keypress === 'left' && this.x > 40){
+     this.x -= 100;
  }
- if(keypress === 'up'){
- this.y -= 82.5;
+ if(keypress === 'up' && this.y > 0){
+ this.y -= 83;
+
  }
- if(keypress === 'right'){
+ if(keypress === 'right' && this.x < 400){
  this.x += 100;
+
  }
- if(keypress === 'down'){
- this.y += 82.5;
+ if(keypress === 'down' && this.y < 400){ 
+ this.y += 83;
+
  }
 
 };
+Player.prototype.checkCollisions = function(){
+  for (var i = 0; i < allEnemies.length; i++){
+     if ((Math.abs(this.x - allEnemies[i].x)) < 101 && (Math.abs(this.y - allEnemies[i].y)) < 50){
+        console.log(this.y);
+        this.reset();
+     }
+  }
+};
+//reset player location after collision
+Player.prototype.reset = function(){
+    this.x = 202;
+    this.y = 400;
+};
 // Now instantiate your objects.
 var enemy1 = new Enemy(50,60,10);
-var enemy2 = new Enemy(100,145,40);
-var enemy3 = new Enemy(130,220,50);
+// var enemy2 = new Enemy(100,145,40);
+// var enemy3 = new Enemy(130,220,50);
 
 
 // Place all enemy objects in an array called allEnemies
-var allEnemies = [enemy1,enemy2,enemy3];
+var allEnemies = [enemy1];
 // Place the player object in a variable called player
 
 var player = new Player();
